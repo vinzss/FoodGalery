@@ -9,6 +9,8 @@ import {
   CheckCircle2,
   X,
   LogOut,
+  Users,
+  LifeBuoy,
 } from 'lucide-react';
 import {
   Restaurant,
@@ -18,7 +20,10 @@ import {
 import { SubmissionQueue } from './SubmissionQueue';
 import { UmkmManager, UmkmFormPayload } from './UmkmManager';
 import { ReviewModerator } from './ReviewModerator';
+import { UserManager } from './UserManager';
+import { ResetRequests } from './ResetRequests';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useAuthText } from '../auth/authText';
 
 interface AdminDashboardProps {
   restaurants: Restaurant[];
@@ -31,6 +36,10 @@ interface AdminDashboardProps {
   onDeleteReview: (reviewId: string) => void;
   onBackToSite: () => void;
   onLogout: () => void;
+  /** Username admin yang sedang login */
+  adminUsername: string;
+  /** Dipanggil jika API admin menolak (sesi habis / role dicabut / dibanned) */
+  onAuthLost: () => void;
 }
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({
@@ -44,10 +53,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onDeleteReview,
   onBackToSite,
   onLogout,
+  adminUsername,
+  onAuthLost,
 }) => {
   const { t } = useLanguage();
+  const a = useAuthText();
   const [activeTab, setActiveTab] = useState<
-    'submissions' | 'umkm' | 'reviews'
+    'submissions' | 'umkm' | 'reviews' | 'users' | 'reset-requests'
   >('umkm');
   const [adminToast, setAdminToast] = useState<string | null>(null);
 
@@ -86,7 +98,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-olive-50 border border-olive/30 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-olive-dark">
               <Shield className="h-3.5 w-3.5 text-olive" />
-              <span>{t.admin.badge} • calvin</span>
+              <span>{t.admin.badge} • {adminUsername}</span>
             </div>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900">
               {t.admin.title}
@@ -218,6 +230,32 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             {t.admin.tabReviews} ({reviews.length})
           </span>
         </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('users')}
+          className={`flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs sm:text-sm font-bold transition-all ${
+            activeTab === 'users'
+              ? 'bg-terracotta text-white shadow-sm'
+              : 'text-charcoal-700 hover:text-charcoal-900'
+          }`}
+        >
+          <Users className="h-4 w-4" />
+          <span>{a.admin.tabUsers}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('reset-requests')}
+          className={`flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs sm:text-sm font-bold transition-all ${
+            activeTab === 'reset-requests'
+              ? 'bg-terracotta text-white shadow-sm'
+              : 'text-charcoal-700 hover:text-charcoal-900'
+          }`}
+        >
+          <LifeBuoy className="h-4 w-4" />
+          <span>{a.admin.tabResetRequests}</span>
+        </button>
       </div>
 
       {/* Active Admin Module */}
@@ -261,6 +299,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               triggerToast(t.admin.reviewDeletedToast);
             }}
           />
+        )}
+
+        {activeTab === 'users' && (
+          <UserManager onToast={triggerToast} onAuthLost={onAuthLost} />
+        )}
+
+        {activeTab === 'reset-requests' && (
+          <ResetRequests onToast={triggerToast} onAuthLost={onAuthLost} />
         )}
       </div>
     </div>

@@ -17,6 +17,7 @@ import {
   Restaurant,
   CommunitySubmission,
   UserReview,
+  AuthUser,
 } from '../types';
 import {
   NEIGHBORHOOD_NAMES,
@@ -26,7 +27,9 @@ import {
   FOOD_PHOTO_PRESETS,
 } from '../data/mockData';
 import { FloatingCard } from '../components/FloatingCard';
+import { GuestLock } from '../components/GuestLock';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useAuthText } from '../auth/authText';
 
 interface SubmitRecommendationPageProps {
   restaurants: Restaurant[];
@@ -35,6 +38,8 @@ interface SubmitRecommendationPageProps {
     submission: Omit<CommunitySubmission, 'id' | 'submittedAt'>
   ) => void;
   onAddReview: (review: Omit<UserReview, 'id' | 'createdAt'>) => void;
+  authUser?: AuthUser | null;
+  onRequireLogin?: (mode: 'login' | 'signup') => void;
 }
 
 export const SubmitRecommendationPage: React.FC<
@@ -44,8 +49,11 @@ export const SubmitRecommendationPage: React.FC<
   preselectedRestaurantId,
   onAddSubmission,
   onAddReview,
+  authUser = null,
+  onRequireLogin,
 }) => {
   const { lang, t, translateCuisine, translateHalal } = useLanguage();
+  const a = useAuthText();
 
   const [activeTab, setActiveTab] = useState<'new-spot' | 'new-review'>(
     preselectedRestaurantId ? 'new-review' : 'new-spot'
@@ -84,6 +92,14 @@ export const SubmitRecommendationPage: React.FC<
       setActiveTab('new-review');
     }
   }, [preselectedRestaurantId]);
+
+  useEffect(() => {
+    if (authUser) {
+      setSubmittedBy((prev) => prev || authUser.username);
+      setSubmitterEmail((prev) => prev || authUser.email);
+      setReviewerName((prev) => prev || authUser.username);
+    }
+  }, [authUser]);
 
   const handleFillSampleSpot = () => {
     setSpotName('Soto Betawi & Sate Maranggi Haji Ridwan');
@@ -225,6 +241,12 @@ export const SubmitRecommendationPage: React.FC<
           </div>
 
           {/* Friendly Curation Confirmation Message */}
+          <GuestLock
+            locked={!authUser}
+            message={a.guest.submitLocked}
+            onLogin={() => onRequireLogin?.('login')}
+            onSignup={() => onRequireLogin?.('signup')}
+          >
           <AnimatePresence mode="wait">
             {submittedSuccess ? (
               <motion.div
@@ -585,6 +607,7 @@ export const SubmitRecommendationPage: React.FC<
               </FloatingCard>
             )}
           </AnimatePresence>
+          </GuestLock>
         </div>
 
         {/* Right Sidebar: How Community Curation Works */}

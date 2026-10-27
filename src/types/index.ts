@@ -11,7 +11,34 @@ export type PageRoute =
   | 'restaurant-detail'
   | 'editorial'
   | 'submit-recommendation'
-  | 'admin';
+  | 'admin'
+  | 'login'
+  | 'signup'
+  | 'forgot-password';
+
+export type UserRole = 'user' | 'admin';
+
+export interface AuthUser {
+  id: number;
+  username: string;
+  email: string;
+  role: UserRole;
+  isBanned: boolean;
+  isVerified?: boolean;
+  createdAt: string;
+}
+
+export interface PasswordResetRequest {
+  id: number;
+  userId: number;
+  username: string;
+  email: string;
+  note: string | null;
+  status: 'pending' | 'resolved' | 'rejected';
+  createdAt: string;
+  handledAt: string | null;
+  handledBy: string | null;
+}
 
 export type NeighborhoodName =
   | 'Kemayoran'

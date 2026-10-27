@@ -1,4 +1,4 @@
-import {
+import type {
   NeighborhoodInfo,
   Restaurant,
   CuratedCollection,
@@ -783,6 +783,783 @@ export const INITIAL_RESTAURANTS: Restaurant[] = [
       { id: 'Porsi Mengenyangkan', en: 'Hearty Portions' },
     ],
   },
+  {
+    id: 'rest-7',
+    name: 'Seafood Ayu Boulevard Barat',
+    tagline: {
+      id: 'Hidden gem warung tenda boga bahari malam hari dengan ikan kuwe bakar kecap dan cumi goreng tepung renyah.',
+      en: 'Legendary late-night open-air seafood stall famous for charcoal-grilled trevally and crispy calamari.',
+    },
+    neighborhood: 'Kelapa Gading',
+    subArea: 'Jl. Boulevard Barat Raya, Kelapa Gading Barat',
+    cuisine: 'Seafood Pesisir Segar',
+    priceTier: '$$',
+    estimatedPriceIdr: 'Rp 65.000 – Rp 140.000',
+    minPriceIdr: 65000,
+    rating: 4.9,
+    isVerified: true,
+    isFeatured: true,
+    halalStatus: 'Halal',
+    heroImage:
+      'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Ikan Kuwe Bakar arang dengan olesan bumbu kecap rempah dan sambal kecap cabai rawit.',
+          en: 'Charcoal-grilled trevally glazed with sweet spiced soy and bird’s-eye chili dip.',
+        },
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Udang saus Padang dan kepiting telur hangat yang selalu ramai diburu saat makan malam.',
+          en: 'Padang-style chili prawns and roe crab served piping hot for dinner crowds.',
+        },
+      },
+    ],
+    editorialSummary: {
+      id: 'Berada di lahan terbuka antara Gedung Gading Marina dan NJIS di jalur penghubung Kelapa Gading–Sunter, Seafood Ayu selalu dipadati pecinta boga bahari setiap sore hingga tengah malam berkat kesegaran lautannya.',
+      en: 'Tucked in an open lot between Gading Marina and NJIS near the Sunter–Kelapa Gading border, Seafood Ayu draws nightly crowds for its ultra-fresh catch and smoky grill.',
+    },
+    editorialReview: {
+      verdict: {
+        id: 'Salah satu seafood tenda terbaik di Jakarta Utara: daging ikan kuwenya manis alami, cuminya empuk tidak alot, dan cah kangkung terasinya wangi wajan panas.',
+        en: 'One of North Jakarta’s finest open-air seafood gems: sweet grilled fish, tender calamari, and wok-charred morning glory.',
+      },
+      atmosphere: {
+        id: 'Suasana tenda malam terbuka yang hidup dan semarak dengan kepulan asap bakaran ikan.',
+        en: 'Lively open-air evening stall atmosphere perfumed with charcoal smoke.',
+      },
+      insiderTip: {
+        id: 'Datanglah sekitar pukul 17.00 – 18.00 WIB agar langsung mendapat meja dan pilihan ukuran ikan kuwe yang paling besar.',
+        en: 'Arrive between 5:00 PM and 6:00 PM to secure a table without waiting and pick the largest fish.',
+      },
+      author: 'Nadia Kusuma',
+      authorRole: {
+        id: 'Editor Kuliner Senior',
+        en: 'Senior Culinary Editor',
+      },
+      publishedPeriod: {
+        id: 'Riset Hidden Gem',
+        en: 'Hidden Gem Research',
+      },
+    },
+    signatureDishes: [
+      {
+        name: 'Ikan Kuwe Bakar Kecap Rempah',
+        priceIdr: 'Rp 95.000',
+        description: {
+          id: 'Ikan kuwe segar dibakar di atas arang batok dengan bumbu kecap manis pedas meresap.',
+          en: 'Fresh trevally grilled over coconut-shell charcoal with sweet spiced soy glaze.',
+        },
+        halalStatus: 'Halal',
+        isPopular: true,
+      },
+      {
+        name: 'Cumi Goreng Tepung Crispy & Udang Saus Padang',
+        priceIdr: 'Rp 68.000',
+        description: {
+          id: 'Cumi segar berbalut tepung renyah keemasan serta udang laut dalam kuah saus Padang pedas gurih.',
+          en: 'Golden crispy battered squid rings alongside sea prawns in spicy Padang sauce.',
+        },
+        halalStatus: 'Halal',
+        isPopular: true,
+      },
+      {
+        name: 'Cah Kangkung Terasi Belacan',
+        priceIdr: 'Rp 28.000',
+        description: {
+          id: 'Kangkung muda ditumis cepat di atas api besar dengan bawang putih dan terasi udang pilihan.',
+          en: 'Young water spinach flash-stir-fried over high flame with garlic and shrimp paste.',
+        },
+        halalStatus: 'Halal',
+      },
+    ],
+    openingHours: {
+      id: 'Setiap Hari • 17.00 – 24.00 WIB',
+      en: 'Daily • 5:00 PM – 12:00 AM',
+    },
+    address:
+      'Jl. Boulevard Barat Raya No. 15, RT.18/RW.3, Kelapa Gading Barat, Jakarta Utara',
+    nearbyLandmark: {
+      id: 'Di antara Gedung Gading Marina & sekolah NJIS (perbatasan Sunter)',
+      en: 'Between Gading Marina Building & NJIS near Sunter border',
+    },
+    vibeTags: [
+      { id: 'Hidden Gem Malam', en: 'Night Hidden Gem' },
+      { id: 'Seafood Segar', en: 'Fresh Catch' },
+      { id: 'Ramah di Kantong', en: 'Great Value' },
+    ],
+  },
+  {
+    id: 'rest-8',
+    name: 'Maison Weiner Cake Shop 1936',
+    tagline: {
+      id: 'Toko roti dan kue klasik tertua di Jakarta sejak 1936 dengan resep warisan Belanda tanpa bahan pengawet.',
+      en: 'Jakarta’s oldest heritage bakery operating since 1936, crafting Dutch-Indie pastries and sourdough.',
+    },
+    neighborhood: 'Senen',
+    subArea: 'Jl. Kramat II, Kwitang, Senen',
+    cuisine: 'Pastry & Hidangan Penutup',
+    priceTier: '$$',
+    estimatedPriceIdr: 'Rp 35.000 – Rp 85.000',
+    minPriceIdr: 35000,
+    rating: 4.9,
+    isVerified: true,
+    isFeatured: true,
+    halalStatus: 'Halal',
+    heroImage:
+      'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Deretan roti sourdough dan kue klasik Belanda yang dipanggang segar sejak pagi di Kwitang.',
+          en: 'Freshly baked heritage sourdough loaves and classic Dutch-Indie cakes in Kwitang.',
+        },
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Ontbijtkoek rempah kayu manis, Kue Soes fla vanila, dan Poffertjes tabur gula halus.',
+          en: 'Spiced Ontbijtkoek, vanilla cream puffs, and powdered Dutch Poffertjes.',
+        },
+      },
+    ],
+    editorialSummary: {
+      id: 'Didirikan oleh Nyonya Gem (Lee Liang Mey) pada tahun 1936 dan kini dikelola generasi ketiga di Jalan Kramat II Kwitang, Maison Weiner menjaga keaslian bangunan kolonial serta resep pastry klasik tempo dulu.',
+      en: 'Founded by Madam Gem in 1936 on Jalan Kramat II Kwitang and now run by the third generation, Maison Weiner preserves Jakarta’s pre-war bakery heritage.',
+    },
+    editorialReview: {
+      verdict: {
+        id: 'Sepotong sejarah hidup kuliner Jakarta. Ontbijtkoek-nya harum rempah kayu manis dan cengkeh, sementara kue soes klasiknya lembut lumer di mulut.',
+        en: 'A living slice of Jakarta culinary history. Their spiced Ontbijtkoek and classic cream puffs taste timeless.',
+      },
+      atmosphere: {
+        id: 'Bangunan heritage tahun 1930-an dengan taplak meja kotak-kotak vintage dan etalase kaca klasik yang hangat.',
+        en: 'Charming 1930s shopfront with vintage checkered tablecloths and classic glass pastry counters.',
+      },
+      insiderTip: {
+        id: 'Kunjungi pada pagi hari (Senin–Sabtu) saat roti sourdough dan Kue Soes baru keluar dari oven pemanggang.',
+        en: 'Visit in the morning Monday through Saturday when the sourdough loaves and cream puffs come warm from the oven.',
+      },
+      author: 'Dimas Pramudya',
+      authorRole: {
+        id: 'Kritikus Kopi & Gaya Hidup',
+        en: 'Coffee & Dining Critic',
+      },
+      publishedPeriod: {
+        id: 'Riset Hidden Gem',
+        en: 'Hidden Gem Research',
+      },
+    },
+    signatureDishes: [
+      {
+        name: 'Ontbijtkoek Rempah Klasik Belanda',
+        priceIdr: 'Rp 55.000',
+        description: {
+          id: 'Kue rempah tradisional Belanda bertekstur lembut dengan aroma kayu manis, pala, dan gula aren.',
+          en: 'Traditional Dutch spiced cake infused with cinnamon, nutmeg, clove, and palm sugar.',
+        },
+        halalStatus: 'Halal',
+        isPopular: true,
+      },
+      {
+        name: 'Kue Soes Klasik & Poffertjes Belanda',
+        priceIdr: 'Rp 32.000',
+        description: {
+          id: 'Kue sus lembut dengan isian fla vanila melimpah serta panekuk mini Belanda bertabur gula halus.',
+          en: 'Choux pastry filled with silky vanilla custard alongside powdered Dutch mini pancakes.',
+        },
+        halalStatus: 'Halal',
+        isPopular: true,
+      },
+      {
+        name: 'Roti Sourdough Ragi Alami 1936',
+        priceIdr: 'Rp 48.000',
+        description: {
+          id: 'Roti sehat fermentasi ragi alami tanpa bahan pengawet dengan kulit renyah dan bagian dalam lembut.',
+          en: 'Naturally leavened preservative-free sourdough bread with crisp crust and tender crumb.',
+        },
+        halalStatus: 'Halal',
+      },
+    ],
+    openingHours: {
+      id: 'Senin – Sabtu • 07.00 – 18.00 WIB (Minggu Tutup)',
+      en: 'Mon – Sat • 7:00 AM – 6:00 PM (Closed Sunday)',
+    },
+    address:
+      'Jl. Kramat II No. 2, RT.6/RW.7, Kwitang, Kec. Senen, Jakarta Pusat 10420',
+    nearbyLandmark: {
+      id: 'Dekat kawasan buku Kwitang & Simpang Lima Senen',
+      en: 'Near Kwitang Book Market & Simpang Lima Senen',
+    },
+    vibeTags: [
+      { id: 'Berdiri Sejak 1936', en: 'Est. 1936' },
+      { id: 'Toko Roti Tertua', en: 'Oldest Bakery' },
+      { id: 'Nostalgia Tempo Dulu', en: 'Vintage Nostalgia' },
+    ],
+  },
+  {
+    id: 'rest-9',
+    name: 'Ippeke Komachi Japanese Dining',
+    tagline: {
+      id: 'Hidden gem restoran Jepang autentik di Kelapa Gading dengan Tori Karaage legendaris dan Yakiniku Set.',
+      en: 'Beloved one-of-a-kind authentic Japanese dining gem in Kelapa Gading famed for Tori Karaage and Yakiniku.',
+    },
+    neighborhood: 'Kelapa Gading',
+    subArea: 'Jl. Boulevard Kelapa Gading, MKG 3',
+    cuisine: 'Jepang & Grill Modern',
+    priceTier: '$$$',
+    estimatedPriceIdr: 'Rp 95.000 – Rp 195.000',
+    minPriceIdr: 95000,
+    rating: 4.9,
+    isVerified: true,
+    isFeatured: true,
+    halalStatus: 'Belum Ada Sertifikasi',
+    heroImage:
+      'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Set menu autentik Jepang lengkap dengan Tori Karaage renyah, nasi Jepang pulen, dan sup miso.',
+          en: 'Authentic Japanese teishoku set featuring juicy Tori Karaage, steamed rice, and miso soup.',
+        },
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Sajian Yakiniku dan Beef Hamburger Steak di ruang makan bergaya izakaya Jepang.',
+          en: 'Sizzling Yakiniku and Japanese Beef Hamburger Steak in a classic wood-paneled dining room.',
+        },
+      },
+    ],
+    editorialSummary: {
+      id: 'Terkenal karena tidak membuka cabang di tempat lain selama puluhan tahun, Ippeke Komachi menjadi destinasi wajib pecinta masakan rumahan Jepang autentik di Kelapa Gading.',
+      en: 'Famous for never opening another branch for decades, Ippeke Komachi is a cherished Kelapa Gading institution for authentic Japanese comfort food.',
+    },
+    editorialReview: {
+      verdict: {
+        id: 'Tori Karaage dan Beef Hamburger Steak-nya konsisten luar biasa: garing di luar namun sangat juicy di dalam dengan saus khas Jepang.',
+        en: 'Their Tori Karaage and Beef Hamburger Steak are remarkably consistent: crisp outside, intensely juicy inside.',
+      },
+      atmosphere: {
+        id: 'Interior kayu hangat bergaya kedai makan tradisional Tokyo dengan bilik tatami yang tenang.',
+        en: 'Warm wood-lined interior evoking a classic Tokyo neighborhood eatery with cozy booth seating.',
+      },
+      insiderTip: {
+        id: 'Pesan paket Set Menu saat jam makan siang untuk mendapatkan Chawanmushi lembut dan hidangan penutup buah segar.',
+        en: 'Order the complete lunch Teishoku set which includes silky steamed Chawanmushi egg custard.',
+      },
+      author: 'Raka Wijaya',
+      authorRole: {
+        id: 'Kontributor Komunitas',
+        en: 'Community Contributor',
+      },
+      publishedPeriod: {
+        id: 'Riset Hidden Gem',
+        en: 'Hidden Gem Research',
+      },
+    },
+    signatureDishes: [
+      {
+        name: 'Tori Karaage Teishoku Set',
+        priceIdr: 'Rp 98.000',
+        description: {
+          id: 'Ayam goreng tepung bumbu jahe-bawang khas Jepang yang super juicy, disajikan dengan salad, nasi, dan miso soup.',
+          en: 'Signature ginger-soy marinated Japanese fried chicken served with salad, rice, and miso soup.',
+        },
+        halalStatus: 'Belum Ada Sertifikasi',
+        isPopular: true,
+      },
+      {
+        name: 'Japanese Beef Hamburger Steak & Yakiniku Set',
+        priceIdr: 'Rp 145.000',
+        description: {
+          id: 'Steak daging sapi cincang Jepang di atas hotplate dengan saus demi-glace gurih dan irisan beef yakiniku.',
+          en: 'Sizzling Japanese-style minced beef steak in rich demi-glace paired with grilled yakiniku beef.',
+        },
+        halalStatus: 'Belum Ada Sertifikasi',
+        isPopular: true,
+      },
+      {
+        name: 'Chawanmushi Telur Kukus Kaldu Dashi',
+        priceIdr: 'Rp 38.000',
+        description: {
+          id: 'Puding telur kukus gurih bertekstur selembut sutra dengan kaldu dashi, jamur shiitake, dan udang.',
+          en: 'Silky savory steamed egg custard infused with dashi broth, shiitake mushroom, and shrimp.',
+        },
+        halalStatus: 'Belum Ada Sertifikasi',
+      },
+    ],
+    openingHours: {
+      id: 'Setiap Hari • 11.00 – 21.30 WIB',
+      en: 'Daily • 11:00 AM – 9:30 PM',
+    },
+    address:
+      'Mal Kelapa Gading 3, Lantai Dasar, Jl. Boulevard Kelapa Gading, Jakarta Utara',
+    nearbyLandmark: {
+      id: 'Area Gourmet Walk Lantai Dasar Mal Kelapa Gading 3',
+      en: 'Ground Floor Gourmet Walk at Mal Kelapa Gading 3',
+    },
+    vibeTags: [
+      { id: 'Tidak Buka Cabang', en: 'Single-Outlet Gem' },
+      { id: 'Jepang Autentik', en: 'Authentic Japanese' },
+      { id: 'Karaage Legendaris', en: 'Legendary Karaage' },
+    ],
+  },
+  {
+    id: 'rest-10',
+    name: 'Pallubasa Serigala Boulevard',
+    tagline: {
+      id: 'Sajian Pallubasa khas Makassar dengan kuah kaldu sapi kental kelapa parut sangrai dan kuning telur ayam kampung.',
+      en: 'Authentic Makassar Pallubasa beef stew enriched with toasted grated coconut and free-range egg yolk.',
+    },
+    neighborhood: 'Kelapa Gading',
+    subArea: 'Jl. Boulevard Raya Blok I4, Kelapa Gading',
+    cuisine: 'Nusantara & Bakar Arang',
+    priceTier: '$$',
+    estimatedPriceIdr: 'Rp 48.000 – Rp 85.000',
+    minPriceIdr: 48000,
+    rating: 4.8,
+    isVerified: true,
+    halalStatus: 'Halal',
+    heroImage:
+      'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Semangkuk Pallubasa hangat dengan taburan kelapa parut sangrai dan telur ayam kampung setengah matang (alas).',
+          en: 'Steaming bowl of Makassar Pallubasa topped with toasted coconut serundeng and raw egg yolk.',
+        },
+      },
+    ],
+    editorialSummary: {
+      id: 'Membawa cita rasa asli Jalan Serigala Makassar ke Boulevard Kelapa Gading, hidangan ini berbeda dari Coto Makassar karena kuah rempahnya diperkaya kelapa parut sangrai yang gurih.',
+      en: 'Bringing the famed flavors of Makassar’s Jalan Serigala to Kelapa Gading, Pallubasa is distinguished by its rich broth thickened with toasted coconut.',
+    },
+    editorialReview: {
+      verdict: {
+        id: 'Saat kuning telur ayam kampung diaduk ke dalam kuah panas berempah kelapa sangrai, teksturnya menjadi sangat creamy dan kaya rasa.',
+        en: 'Stirring a free-range egg yolk into the piping-hot toasted-coconut beef broth creates an unforgettable velvety depth.',
+      },
+      atmosphere: {
+        id: 'Ruko bersih dua lantai di Boulevard Raya yang nyaman untuk makan siang maupun makan malam keluarga.',
+        en: 'Clean two-story shophouse along Boulevard Raya ideal for hearty lunches and dinners.',
+      },
+      insiderTip: {
+        id: 'Pesan Pallubasa pakai "Alas" (tambahan kuning telur ayam kampung mentah yang langsung matang terkena kuah mendidih).',
+        en: 'Always order your bowl "pakai Alas" (with a fresh free-range egg yolk dropped into the boiling broth).',
+      },
+      author: 'Nadia Kusuma',
+      authorRole: {
+        id: 'Editor Kuliner Senior',
+        en: 'Senior Culinary Editor',
+      },
+      publishedPeriod: {
+        id: 'Riset Hidden Gem',
+        en: 'Hidden Gem Research',
+      },
+    },
+    signatureDishes: [
+      {
+        name: 'Pallubasa Daging Sapi & Pipi Spesial + Alas',
+        priceIdr: 'Rp 52.000',
+        description: {
+          id: 'Potongan daging sapi dan pipi empuk dalam kuah rempah kelapa sangrai dengan kuning telur ayam kampung.',
+          en: 'Tender braised beef and cheek in toasted-coconut spice broth crowned with free-range egg yolk.',
+        },
+        halalStatus: 'Halal',
+        isPopular: true,
+      },
+      {
+        name: 'Es Pisang Ijo & Barongko Khas Makassar',
+        priceIdr: 'Rp 32.000',
+        description: {
+          id: 'Pisang raja balut adonan pandan hijau dengan bubur sumsum lembut dan sirup merah DHT asli Makassar.',
+          en: 'Pandan-wrapped plantain served over creamy rice-flour custard and authentic Makassar red syrup.',
+        },
+        halalStatus: 'Halal',
+      },
+    ],
+    openingHours: {
+      id: 'Setiap Hari • 09.30 – 22.00 WIB',
+      en: 'Daily • 9:30 AM – 10:00 PM',
+    },
+    address:
+      'Jl. Boulevard Raya Blok I4 No. 6, Kelapa Gading Timur, Jakarta Utara',
+    nearbyLandmark: {
+      id: 'Deretan ruko kuliner Jl. Boulevard Raya Kelapa Gading',
+      en: 'Along the main Boulevard Raya shophouse row in Kelapa Gading',
+    },
+    vibeTags: [
+      { id: 'Khas Makassar Asli', en: 'Authentic Makassar' },
+      { id: 'Kuah Kelapa Sangrai', en: 'Toasted Coconut Broth' },
+    ],
+  },
+  {
+    id: 'rest-11',
+    name: 'Shantung 77 Kuotie & Mie Mangga Besar',
+    tagline: {
+      id: 'Hidden gem kuotie panggang garing dan sekba/mie tradisional gaya Shandong di Jalan Mangga Besar I.',
+      en: 'Crispy pan-seared Shandong-style potstickers (kuotie) and traditional noodles on Jalan Mangga Besar I.',
+    },
+    neighborhood: 'Mangga Besar',
+    subArea: 'Jl. Mangga Besar I, Taman Sari',
+    cuisine: 'Bakmi & Mie Tradisional',
+    priceTier: '$$',
+    estimatedPriceIdr: 'Rp 45.000 – Rp 80.000',
+    minPriceIdr: 45000,
+    rating: 4.8,
+    isVerified: true,
+    halalStatus: 'Non-Halal',
+    heroImage:
+      'https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Sepiring Kuotie Panggang keemasan yang garing di bagian bawah dan lembut berkaldu di bagian atas.',
+          en: 'Golden pan-fried kuotie dumplings crisp on the bottom and juicy inside.',
+        },
+      },
+    ],
+    editorialSummary: {
+      id: 'Tersembunyi di Jalan Mangga Besar I No. 20, kedai sederhana ini terkenal dengan kuotie buatan tangan yang dipanggang di atas wajan datar hingga kulit bawahnya renyah kecokelatan.',
+      en: 'Tucked along Jalan Mangga Besar I No. 20, this unassuming spot is famous for handmade Shandong potstickers seared on flat iron griddles.',
+    },
+    editorialReview: {
+      verdict: {
+        id: 'Kulit kuotienya tipis lentur dengan isian daging cincang dan kucai yang melimpah, makin sempurna saat dicocol saus bawang putih cabai dan minyak wijen.',
+        en: 'Delicate wrappers packed with savory minced meat and garlic chives, best dipped in chili-garlic vinegar and sesame oil.',
+      },
+      atmosphere: {
+        id: 'Kedai klasik tanpa basa-basi di koridor Jalan Mangga Besar I yang selalu harum aroma panggangan kuotie.',
+        en: 'No-frills heritage eatery along Jalan Mangga Besar I filled with the aroma of sizzling dumplings.',
+      },
+      insiderTip: {
+        id: 'Pesan kombinasi Kuotie Panggang (10 pcs) bersama semangkuk Sup Asam Pedas hangat.',
+        en: 'Pair an order of 10 pan-seared kuotie with a bowl of piping-hot sour and spicy soup.',
+      },
+      author: 'Raka Wijaya',
+      authorRole: {
+        id: 'Kontributor Komunitas',
+        en: 'Community Contributor',
+      },
+      publishedPeriod: {
+        id: 'Riset Hidden Gem',
+        en: 'Hidden Gem Research',
+      },
+    },
+    signatureDishes: [
+      {
+        name: 'Kuotie Panggang Spesial Shantung (Isi 10)',
+        priceIdr: 'Rp 58.000',
+        description: {
+          id: 'Sepuluh buah pangsit kuotie panggang garing berisi daging cincang, udang, dan daun kucai segar.',
+          en: 'Ten crispy-bottomed pan-fried dumplings stuffed with minced meat, prawn, and fresh garlic chives.',
+        },
+        halalStatus: 'Non-Halal',
+        isPopular: true,
+      },
+      {
+        name: 'Bakmi Jamur & Swekiau Kuah Kaldu',
+        priceIdr: 'Rp 48.000',
+        description: {
+          id: 'Mie telur lembut dengan topping daging cincang jamur dan pangsit rebus swekiau yang padat.',
+          en: 'Silky egg noodles topped with braised mushroom mince and plump boiled swekiau dumplings.',
+        },
+        halalStatus: 'Non-Halal',
+      },
+    ],
+    openingHours: {
+      id: 'Setiap Hari • 10.00 – 22.00 WIB',
+      en: 'Daily • 10:00 AM – 10:00 PM',
+    },
+    address:
+      'Jl. Mangga Besar I No. 20, RT.2/RW.5, Mangga Besar, Kec. Taman Sari, Jakarta Barat',
+    nearbyLandmark: {
+      id: 'Sekitar 150 meter dari simpang Jl. Raya Mangga Besar & Mangga Besar I',
+      en: '150 meters from the Jalan Raya Mangga Besar intersection',
+    },
+    vibeTags: [
+      { id: 'Kuotie Legendaris', en: 'Legendary Potstickers' },
+      { id: 'Buatan Tangan', en: 'Handmade Daily' },
+    ],
+  },
+  {
+    id: 'rest-12',
+    name: 'Bubur Ayam Mangga Besar 1',
+    tagline: {
+      id: 'Bubur beras kental bergaya Tionghoa klasik dengan irisan ayam rebus kampung, ayam panggang, dan telur pitan.',
+      en: 'Velvety Chinese-style rice congee topped with poached free-range chicken, roast poultry, and century egg.',
+    },
+    neighborhood: 'Mangga Besar',
+    subArea: 'Jl. Mangga Besar I No. 46, Taman Sari',
+    cuisine: 'Bakmi & Mie Tradisional',
+    priceTier: '$$',
+    estimatedPriceIdr: 'Rp 42.000 – Rp 75.000',
+    minPriceIdr: 42000,
+    rating: 4.8,
+    isVerified: true,
+    halalStatus: 'Non-Halal',
+    heroImage:
+      'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Semangkuk bubur hangat bertekstur halus dengan minyak wijen harum dan cakwe goreng renyah.',
+          en: 'Silky slow-cooked congee drizzled with fragrant sesame oil and crispy fried dough sticks.',
+        },
+      },
+    ],
+    editorialSummary: {
+      id: 'Salah satu institusi kuliner malam dan sarapan paling tua di Jalan Mangga Besar I. Buburnya dimasak berjam-jam dengan kaldu ayam kampung hingga bulir berasnya menyatu lembut.',
+      en: 'A longstanding culinary institution on Jalan Mangga Besar I, simmering rice congee for hours in free-range poultry stock until velvety smooth.',
+    },
+    editorialReview: {
+      verdict: {
+        id: 'Tanpa tambahan kecap pun buburnya sudah sangat gurih. Potongan ayam rebus pekchamke-nya lembut dan berpadu pas dengan telur pitan.',
+        en: 'Naturally savory even without soy sauce; the poached free-range chicken and century egg pairing is classic comfort.',
+      },
+      atmosphere: {
+        id: 'Ruang makan ruko terang yang tak pernah sepi dari sore hingga larut malam.',
+        en: 'Brightly lit shophouse dining room bustling from early evening until late night.',
+      },
+      insiderTip: {
+        id: 'Tambahkan seporsi Cakwe Goreng hangat dan Telur Ayam Kampung mentah di dasar mangkuk sebelum disiram bubur panas.',
+        en: 'Order a side of crispy fried cakwe and a raw free-range egg cracked into the bottom of the hot congee bowl.',
+      },
+      author: 'Dimas Pramudya',
+      authorRole: {
+        id: 'Kritikus Kopi & Gaya Hidup',
+        en: 'Coffee & Dining Critic',
+      },
+      publishedPeriod: {
+        id: 'Riset Hidden Gem',
+        en: 'Hidden Gem Research',
+      },
+    },
+    signatureDishes: [
+      {
+        name: 'Bubur Ayam Spesial Pekchamke & Telur Pitan',
+        priceIdr: 'Rp 52.000',
+        description: {
+          id: 'Bubur kaldu kental dengan irisan ayam kampung rebus minyak wijen, telur pitan, dan daun bawang.',
+          en: 'Thick stock-simmered congee topped with sesame-oil poached chicken, century egg, and scallions.',
+        },
+        halalStatus: 'Belum Ada Sertifikasi',
+        isPopular: true,
+      },
+      {
+        name: 'Cakwe Goreng & Ayam Panggang Spesial',
+        priceIdr: 'Rp 45.000',
+        description: {
+          id: 'Potongan ayam panggang berbumbu gurih manis dengan cakwe renyah pendamping bubur.',
+          en: 'Savory-sweet roast chicken slices served alongside crispy fried dough sticks.',
+        },
+        halalStatus: 'Non-Halal',
+      },
+    ],
+    openingHours: {
+      id: 'Setiap Hari • 16.30 – 24.00 WIB',
+      en: 'Daily • 4:30 PM – 12:00 AM',
+    },
+    address:
+      'Jl. Mangga Besar I No. 46, RT.2/RW.5, Mangga Besar, Kec. Taman Sari, Jakarta Barat',
+    nearbyLandmark: {
+      id: 'Koridor kuliner Jl. Mangga Besar I dekat Stasiun Mangga Besar',
+      en: 'Along Jalan Mangga Besar I culinary street near Mangga Besar Station',
+    },
+    vibeTags: [
+      { id: 'Bubur Legendaris', en: 'Legendary Congee' },
+      { id: 'Hangat & Nyaman', en: 'Ultimate Comfort Food' },
+    ],
+  },
+  {
+    id: 'rest-13',
+    name: 'RM Sop Sapi Bu Rum Garuda',
+    tagline: {
+      id: 'Hidden gem warung sop daging sapi berkuah kaldu bening rempah segar yang berdiri puluhan tahun di Jalan Garuda Kemayoran.',
+      en: 'Decades-old Kemayoran hidden gem serving crystal-clear spiced beef soup along Jalan Garuda.',
+    },
+    neighborhood: 'Kemayoran',
+    subArea: 'Jl. Garuda No. 37, Kemayoran',
+    cuisine: 'Nusantara & Bakar Arang',
+    priceTier: '$',
+    estimatedPriceIdr: 'Rp 32.000 – Rp 55.000',
+    minPriceIdr: 32000,
+    rating: 4.8,
+    isVerified: true,
+    halalStatus: 'Halal',
+    heroImage:
+      'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Sop daging sapi kuah kaldu bening dengan taburan bawang goreng, seledri, dan perasan jeruk nipis.',
+          en: 'Clear beef bone broth soup generously filled with tender beef chunks, fried shallots, and lime.',
+        },
+      },
+    ],
+    editorialSummary: {
+      id: 'Di tengah ramainya Jalan Garuda Kemayoran, RM Sop Sapi Bu Rum menjadi langganan warga lokal selama puluhan tahun berkat kuah sop sapinya yang bening, segar, tidak berlemak berlebihan, dan porsi dagingnya yang royal.',
+      en: 'Along bustling Jalan Garuda in Kemayoran, RM Sop Sapi Bu Rum has been a local secret for decades thanks to its clean, deeply flavorful beef bone broth and generous meat portions.',
+    },
+    editorialReview: {
+      verdict: {
+        id: 'Hidangan rumahan yang jujur dan menghangatkan perut. Daging sapinya empuk meresap kaldu pala dan merica, sangat pas disantap bersama sambal rawit rebus dan perkedel kentang.',
+        en: 'Honest, heartwarming comfort food. Tender beef simmered with nutmeg and white pepper, best enjoyed with boiled chili sambal and potato perkedel.',
+      },
+      atmosphere: {
+        id: 'Warung makan sederhana yang bersih dan selalu ramai saat jam makan siang di Jalan Garuda.',
+        en: 'Simple, spotless neighborhood eatery packed with regulars during lunch hours on Jalan Garuda.',
+      },
+      insiderTip: {
+        id: 'Jangan lewatkan tambahan Perkedel Kentang Daging dan Tempe Goreng Tepung hangat sebagai pendamping nasi sop.',
+        en: 'Add warm beef-potato perkedel fritters and crispy battered tempeh alongside your soup and rice.',
+      },
+      author: 'Nadia Kusuma',
+      authorRole: {
+        id: 'Editor Kuliner Senior',
+        en: 'Senior Culinary Editor',
+      },
+      publishedPeriod: {
+        id: 'Riset Hidden Gem',
+        en: 'Hidden Gem Research',
+      },
+    },
+    signatureDishes: [
+      {
+        name: 'Sop Daging Sapi & Iga Kuah Bening Spesial',
+        priceIdr: 'Rp 42.000',
+        description: {
+          id: 'Potongan daging sandung lamur dan iga sapi empuk dalam kuah kaldu bening wortel, kentang, dan tomat segar.',
+          en: 'Tender beef brisket and short ribs in clear spiced bone broth with carrots, potatoes, and fresh tomatoes.',
+        },
+        halalStatus: 'Halal',
+        isPopular: true,
+      },
+      {
+        name: 'Perkedel Kentang Daging & Ayam Goreng Lengkuas',
+        priceIdr: 'Rp 28.000',
+        description: {
+          id: 'Perkedel kentang tumbuk lembut serta ayam goreng kremes serundeng lengkuas gurih.',
+          en: 'Hand-mashed potato fritters and crispy fried chicken topped with savory galangal flakes.',
+        },
+        halalStatus: 'Halal',
+      },
+    ],
+    openingHours: {
+      id: 'Setiap Hari • 08.30 – 20.30 WIB',
+      en: 'Daily • 8:30 AM – 8:30 PM',
+    },
+    address:
+      'Jl. Garuda No. 37, RT.10/RW.4, Gunung Sahari Selatan, Kec. Kemayoran, Jakarta Pusat',
+    nearbyLandmark: {
+      id: 'Koridor utama Jl. Garuda dekat Gang H. Ten Kemayoran',
+      en: 'Main Jalan Garuda corridor near Gang H. Ten Kemayoran',
+    },
+    vibeTags: [
+      { id: 'Hidden Gem Warga', en: 'Neighborhood Gem' },
+      { id: 'Kuah Segar Bening', en: 'Clear Savory Broth' },
+    ],
+  },
+  {
+    id: 'rest-14',
+    name: 'Sop Buntut & Iga Bakar Sunter Paradise',
+    tagline: {
+      id: 'Buntut sapi bakar bumbu kecap rempah karamel dan sop kuah pala cengkeh di kawasan Ruko Sunter Paradise.',
+      en: 'Caramelized spiced soy grilled oxtail and aromatic nutmeg-clove oxtail soup in Ruko Sunter Paradise.',
+    },
+    neighborhood: 'Sunter',
+    subArea: 'Ruko Sunter Paradise, Jl. Danau Sunter Barat',
+    cuisine: 'Nusantara & Bakar Arang',
+    priceTier: '$$',
+    estimatedPriceIdr: 'Rp 65.000 – Rp 120.000',
+    minPriceIdr: 65000,
+    rating: 4.9,
+    isVerified: true,
+    halalStatus: 'Halal',
+    heroImage:
+      'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85',
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85',
+        caption: {
+          id: 'Sop Buntut Bakar dengan olesan bumbu kecap rempah yang terkaramelisasi di atas arang.',
+          en: 'Charcoal-grilled oxtail glazed in caramelized sweet soy and spices, served with clear broth on the side.',
+        },
+      },
+    ],
+    editorialSummary: {
+      id: 'Terletak di deretan Ruko Sunter Paradise Jalan Danau Sunter Barat, rumah makan ini menyajikan buntut sapi pilihan yang direbus perlahan selama 4 jam sebelum dibakar di atas bara arang.',
+      en: 'Located in Ruko Sunter Paradise on Jalan Danau Sunter Barat, this spot slow-simmers center-cut oxtail for four hours before finishing it over glowing charcoal.',
+    },
+    editorialReview: {
+      verdict: {
+        id: 'Daging buntutnya langsung lepas dari tulang hanya dengan sentuhan sendok, dan sambal ijo terasinya memberikan tendangan rasa segar.',
+        en: 'The oxtail meat falls effortlessly off the bone at the touch of a spoon, paired with vibrant green chili sambal.',
+      },
+      atmosphere: {
+        id: 'Ruang makan keluarga yang tenang dan sejuk di komplek Ruko Sunter Paradise dengan parkir leluasa.',
+        en: 'Calm, air-conditioned family dining room in the Sunter Paradise shophouse complex with easy parking.',
+      },
+      insiderTip: {
+        id: 'Pilih menu Sop Buntut Bakar agar Anda mendapatkan daging bakar karamel sekaligus semangkuk kuah sop kaldu hangat.',
+        en: 'Order the Grilled Oxtail (Buntut Bakar) so you get both caramelized grilled meat and a bowl of hot spiced broth.',
+      },
+      author: 'Raka Wijaya',
+      authorRole: {
+        id: 'Kontributor Komunitas',
+        en: 'Community Contributor',
+      },
+      publishedPeriod: {
+        id: 'Riset Hidden Gem',
+        en: 'Hidden Gem Research',
+      },
+    },
+    signatureDishes: [
+      {
+        name: 'Sop Buntut Bakar Kecap Rempah Spesial',
+        priceIdr: 'Rp 92.000',
+        description: {
+          id: 'Buntut sapi tengah empuk dibakar dengan bumbu kecap mentega pala, disajikan bersama kuah sop bening dan emping.',
+          en: 'Tender center-cut oxtail grilled with nutmeg-butter soy glaze, served with clear soup and melinjo crackers.',
+        },
+        halalStatus: 'Halal',
+        isPopular: true,
+      },
+      {
+        name: 'Soto Betawi Susu & Sate Maranggi Sapi',
+        priceIdr: 'Rp 68.000',
+        description: {
+          id: 'Soto Betawi kuah susu gurih dilengkapi 5 tusuk sate sapi maranggi bakar arang.',
+          en: 'Creamy milk-broth Soto Betawi paired with five skewers of charcoal-grilled Maranggi beef satay.',
+        },
+        halalStatus: 'Halal',
+      },
+    ],
+    openingHours: {
+      id: 'Setiap Hari • 10.00 – 21.30 WIB',
+      en: 'Daily • 10:00 AM – 9:30 PM',
+    },
+    address:
+      'Ruko Sunter Paradise Blok R No. 21, Jl. Danau Sunter Barat, Sunter Agung, Jakarta Utara',
+    nearbyLandmark: {
+      id: 'Komplek Ruko Sunter Paradise dekat RS Royal Progress Sunter',
+      en: 'Sunter Paradise Shophouse Complex near Royal Progress Hospital',
+    },
+    vibeTags: [
+      { id: 'Buntut Bakar Empuk', en: 'Fall-Off-The-Bone Oxtail' },
+      { id: 'Favorit Keluarga', en: 'Family Favorite' },
+    ],
+  },
 ];
 
 export const CURATED_COLLECTIONS: CuratedCollection[] = [
@@ -1058,6 +1835,50 @@ export const INITIAL_USER_REVIEWS: UserReview[] = [
       'Saya belum pernah ke tempat ini dan cuma asal kasih bintang 2 saja. Jual peninggi badan murah hubungi nomor kami.',
     createdAt: '16 Oktober 2026',
     isFlagged: true,
+  },
+  {
+    id: 'rev-6',
+    restaurantId: 'rest-7',
+    restaurantName: 'Seafood Ayu Boulevard Barat',
+    reviewerName: 'Hendra Wijaya',
+    rating: 5,
+    favoriteDish: 'Ikan Kuwe Bakar Kecap Rempah',
+    comment:
+      'Seafood tenda malam paling juara di perbatasan Kelapa Gading–Sunter! Ikan kuwe bakarnya segar banget dan cumi goreng tepungnya garing empuk.',
+    createdAt: '25 Oktober 2026',
+  },
+  {
+    id: 'rev-7',
+    restaurantId: 'rest-8',
+    restaurantName: 'Maison Weiner Cake Shop 1936',
+    reviewerName: 'Astrid Prameswari',
+    rating: 5,
+    favoriteDish: 'Ontbijtkoek Rempah Klasik Belanda',
+    comment:
+      'Suasana toko rotinya sangat autentik sejak 1936 di Kwitang Senen. Ontbijtkoek dan kue soes klasiknya wajib dibeli setiap lewat Senen!',
+    createdAt: '25 Oktober 2026',
+  },
+  {
+    id: 'rev-8',
+    restaurantId: 'rest-9',
+    restaurantName: 'Ippeke Komachi Japanese Dining',
+    reviewerName: 'Raymond Santoso',
+    rating: 5,
+    favoriteDish: 'Tori Karaage Teishoku Set',
+    comment:
+      'Restoran Jepang hidden gem di Kelapa Gading yang rasanya tidak pernah berubah dari dulu. Tori Karaage dan Chawanmushi-nya terbaik.',
+    createdAt: '24 Oktober 2026',
+  },
+  {
+    id: 'rev-9',
+    restaurantId: 'rest-11',
+    restaurantName: 'Shantung 77 Kuotie & Mie Mangga Besar',
+    reviewerName: 'フェリシア (Felicia Tan)',
+    rating: 5,
+    favoriteDish: 'Kuotie Panggang Spesial Shantung (Isi 10)',
+    comment:
+      'Kuotie panggangnya garing di bawah dan juicy banget di dalam, dicocol minyak wijen + bawang putih cincang makin mantap.',
+    createdAt: '24 Oktober 2026',
   },
 ];
 

@@ -11,30 +11,47 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useAuth } from '../auth/AuthContext';
+import { ApiError } from '../auth/api';
+import { useAuthText, useErrorMessage } from '../auth/authText';
 
 interface AdminLoginProps {
   onLoginSuccess: () => void;
   onBackToPublicSite: () => void;
+  onNavigateForgot?: () => void;
 }
 
 export const AdminLogin: React.FC<AdminLoginProps> = ({
   onLoginSuccess,
   onBackToPublicSite,
+  onNavigateForgot,
 }) => {
   const { t } = useLanguage();
+  const a = useAuthText();
+  const errorMessageFor = useErrorMessage();
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Kredensial diverifikasi di backend (bcrypt) — tidak ada lagi password hardcoded di client.
+  // Role admin dicek oleh App (RBAC) setelah login berhasil.
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
-
-    if (username.trim() === 'calvin' && password === '123456') {
+    setSubmitting(true);
+    try {
+      await login(username.trim(), password);
       onLoginSuccess();
-    } else {
-      setErrorMessage(t.admin.loginError);
+    } catch (err) {
+      const code = err instanceof ApiError ? err.code : 'UNKNOWN_ERROR';
+      setErrorMessage(
+        code === 'INVALID_CREDENTIALS' ? t.admin.loginError : errorMessageFor(code)
+      );
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -131,10 +148,22 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
 
           <button
             type="submit"
-            className="w-full rounded-xl bg-terracotta hover:bg-terracotta-dark text-white py-3.5 text-sm font-bold shadow-md transition-all mt-2"
+            disabled={submitting}
+            className="w-full rounded-xl bg-terracotta hover:bg-terracotta-dark disabled:opacity-60 text-white py-3.5 text-sm font-bold shadow-md transition-all mt-2"
           >
-            {t.admin.loginBtn}
+            {submitting ? a.submitting : t.admin.loginBtn}
           </button>
+          {onNavigateForgot && (
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={onNavigateForgot}
+                className="text-xs font-bold text-terracotta hover:underline"
+              >
+                {a.forgotLink}
+              </button>
+            </div>
+          )}
         </form>
 
         <div className="pt-4 border-t border-cream-200 flex items-center justify-center">

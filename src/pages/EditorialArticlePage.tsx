@@ -32,6 +32,7 @@ interface EditorialArticlePageProps {
   onSelectRestaurant: (id: string) => void;
   onNavigateDirectory: (neighborhood?: NeighborhoodName) => void;
   onNavigateSubmit: () => void;
+  isGuest?: boolean;
 }
 
 export const EditorialArticlePage: React.FC<EditorialArticlePageProps> = ({
@@ -44,6 +45,7 @@ export const EditorialArticlePage: React.FC<EditorialArticlePageProps> = ({
   onSelectRestaurant,
   onNavigateDirectory,
   onNavigateSubmit,
+  isGuest = false,
 }) => {
   const { t, localize, translateCuisine } = useLanguage();
   const [activeTocId, setActiveTocId] = useState<string>(
@@ -377,7 +379,11 @@ export const EditorialArticlePage: React.FC<EditorialArticlePageProps> = ({
                         </div>
 
                         {embeddedRestaurant.signatureDishes[0] && (
-                          <div className="rounded-xl bg-cream-50 border border-cream-200 p-3 flex items-center justify-between gap-2">
+                          <div
+                            className={`rounded-xl bg-cream-50 border border-cream-200 p-3 flex items-center justify-between gap-2 ${
+                              isGuest ? 'blur-sm select-none' : ''
+                            }`}
+                          >
                             <div>
                               <span className="text-[10px] uppercase font-bold text-olive-dark block">
                                 {t.editorial.editorDishPick}

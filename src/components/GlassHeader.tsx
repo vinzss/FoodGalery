@@ -11,9 +11,14 @@ import {
   Home,
   MessageSquarePlus,
   Globe,
+  LogIn,
+  LogOut,
+  Shield,
+  ChevronDown,
 } from 'lucide-react';
-import { PageRoute, Restaurant } from '../types';
+import { AuthUser, PageRoute, Restaurant } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useAuthText } from '../auth/authText';
 
 interface GlassHeaderProps {
   currentPage: PageRoute;
@@ -22,6 +27,9 @@ interface GlassHeaderProps {
   restaurants: Restaurant[];
   onSelectRestaurant: (id: string) => void;
   onRemoveSaved: (id: string) => void;
+  /** User yang sedang login (null = guest) */
+  authUser?: AuthUser | null;
+  onLogout?: () => void;
 }
 
 export const GlassHeader: React.FC<GlassHeaderProps> = ({
@@ -31,10 +39,14 @@ export const GlassHeader: React.FC<GlassHeaderProps> = ({
   restaurants,
   onSelectRestaurant,
   onRemoveSaved,
+  authUser = null,
+  onLogout,
 }) => {
   const { lang, setLang, t } = useLanguage();
+  const a = useAuthText();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [savedDrawerOpen, setSavedDrawerOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
 
   const navItems: {
     id: PageRoute;
@@ -177,6 +189,82 @@ export const GlassHeader: React.FC<GlassHeaderProps> = ({
                   {savedIds.length}
                 </span>
               </button>
+
+              {/* Account: Login button (guest) or account menu (logged in) */}
+              {!authUser ? (
+                <button
+                  type="button"
+                  onClick={() => handleNavClick('login')}
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-terracotta hover:bg-terracotta-dark px-3 py-2 text-xs font-bold text-white shadow-sm transition"
+                >
+                  <LogIn className="h-4 w-4" />
+                  <span className="hidden sm:inline">{a.login}</span>
+                </button>
+              ) : (
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setAccountMenuOpen((p) => !p)}
+                    aria-expanded={accountMenuOpen}
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-white hover:bg-cream-100 border border-cream-200 pl-1.5 pr-2 py-1.5 text-xs font-semibold text-charcoal-800 shadow-sm transition"
+                  >
+                    <span className="h-7 w-7 rounded-lg bg-terracotta text-white flex items-center justify-center font-bold uppercase">
+                      {authUser.username[0]}
+                    </span>
+                    <span className="hidden md:inline max-w-[110px] truncate">
+                      {authUser.username}
+                    </span>
+                    <ChevronDown className="h-3.5 w-3.5 text-charcoal-500" />
+                  </button>
+                  {accountMenuOpen && (
+                    <>
+                      <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setAccountMenuOpen(false)}
+                      />
+                      <div className="absolute right-0 mt-2 z-50 w-56 rounded-2xl bg-white border border-cream-200 shadow-warm-lg p-2">
+                        <div className="px-3 py-2 border-b border-cream-200 mb-1">
+                          <p className="text-sm font-bold text-charcoal-900 truncate">
+                            {authUser.username}
+                          </p>
+                          <p className="text-[11px] text-charcoal-500 truncate">
+                            {authUser.email}
+                          </p>
+                          {authUser.role === 'admin' && (
+                            <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-olive px-2 py-0.5 text-[10px] font-bold text-white">
+                              <Shield className="h-3 w-3" /> Admin
+                            </span>
+                          )}
+                        </div>
+                        {authUser.role === 'admin' && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setAccountMenuOpen(false);
+                              handleNavClick('admin');
+                            }}
+                            className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-charcoal-800 hover:bg-cream-100"
+                          >
+                            <Shield className="h-4 w-4 text-olive" />
+                            {t.admin.title}
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setAccountMenuOpen(false);
+                            onLogout?.();
+                          }}
+                          className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50"
+                        >
+                          <LogOut className="h-4 w-4" />
+                          {a.logout}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
 
               {/* Mobile Hamburger Trigger */}
               <button
