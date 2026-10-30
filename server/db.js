@@ -26,7 +26,7 @@ const SCHEMA = [
     username VARCHAR(32) NOT NULL UNIQUE,
     email VARCHAR(191) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    role ENUM('user','admin') NOT NULL DEFAULT 'user',
+    role ENUM('user','admin','main_admin') NOT NULL DEFAULT 'user',
     is_banned TINYINT(1) NOT NULL DEFAULT 0,
     is_verified TINYINT(1) NOT NULL DEFAULT 0,
     otp_code_hash VARCHAR(255) NULL,
@@ -35,6 +35,19 @@ const SCHEMA = [
     security_answer_hash VARCHAR(255) NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
+  `CREATE TABLE IF NOT EXISTS admin_requests (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    target_user_id INT UNSIGNED NOT NULL,
+    requested_by INT UNSIGNED NOT NULL,
+    reason VARCHAR(500) NULL,
+    status ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+    reviewed_by INT UNSIGNED NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reviewed_at TIMESTAMP NULL,
+    CONSTRAINT fk_ar_target FOREIGN KEY (target_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_ar_requester FOREIGN KEY (requested_by) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_ar_reviewer FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`,
   `CREATE TABLE IF NOT EXISTS password_reset_requests (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -285,6 +298,51 @@ export async function insertSubmission(sub, userId = null) {
   );
 }
 
+export async function seedMainAdmin({ resetPassword = false } = {}) {
+  const username = process.env.SEED_ADMIN_USERNAME || 'calvin';
+  const password = process.env.SEED_ADMIN_PASSWORD || '123456';
+  const email = process.env.SEED_ADMIN_EMAIL || 'calvin@foodalbum.local';
+
+  // Selalu hash password dengan bcrypt (12 rounds), tidak pernah disimpan plain text
+  const hash = await bcrypt.hash(password, BCRYPT_ROUNDS);
+
+  const [existing] = await pool.query(
+    'SELECT id, role FROM users WHERE LOWER(username) = LOWER(?) LIMIT 1',
+    [username]
+  );
+
+  if (existing.length === 0) {
+    await pool.query(
+      `INSERT INTO users (username, email, password_hash, role, is_banned, is_verified)
+       VALUES (?, ?, ?, 'main_admin', 0, 1)`,
+      [username, email, hash]
+    );
+    console.log(
+      `[db] Super Admin (Main Admin) "${username}" berhasil di-seed dengan bcrypt (${BCRYPT_ROUNDS} rounds).`
+    );
+  } else if (resetPassword) {
+    await pool.query(
+      `UPDATE users
+          SET password_hash = ?, role = 'main_admin', is_banned = 0, is_verified = 1
+        WHERE id = ?`,
+      [hash, existing[0].id]
+    );
+    console.log(
+      `[db] Super Admin (Main Admin) "${username}" diperbarui & password di-hash ulang dengan bcrypt (${BCRYPT_ROUNDS} rounds).`
+    );
+  } else if (existing[0].role !== 'main_admin') {
+    await pool.query(
+      `UPDATE users
+          SET role = 'main_admin', is_banned = 0, is_verified = 1
+        WHERE id = ?`,
+      [existing[0].id]
+    );
+    console.log(
+      `[db] Akun "${username}" ditingkatkan menjadi Super Admin (main_admin).`
+    );
+  }
+}
+
 export async function initDatabase() {
   // 1. Pastikan database ada
   const bootstrap = await mysql.createConnection(DB_CONFIG);
@@ -301,37 +359,23 @@ export async function initDatabase() {
     connectionLimit: 10,
   });
 
-  // 3. Tabel & migrasi kolom OTP verifikasi pada tabel users yang sudah ada
+  // 3. Tabel & migrasi kolom OTP verifikasi + role main_admin pada tabel users yang sudah ada
   for (const sql of SCHEMA) {
     await pool.query(sql);
   }
   await pool.query(
     `ALTER TABLE users
+      MODIFY COLUMN role ENUM('user','admin','main_admin') NOT NULL DEFAULT 'user',
       ADD COLUMN IF NOT EXISTS is_verified TINYINT(1) NOT NULL DEFAULT 0 AFTER is_banned,
       ADD COLUMN IF NOT EXISTS otp_code_hash VARCHAR(255) NULL AFTER is_verified,
       ADD COLUMN IF NOT EXISTS otp_expires_at DATETIME NULL AFTER otp_code_hash`
   );
-  await pool.query("UPDATE users SET is_verified = 1 WHERE role = 'admin'");
-
-  // 4. Seed admin pertama (hanya jika belum ada admin sama sekali)
-  const [admins] = await pool.query(
-    "SELECT id FROM users WHERE role = 'admin' LIMIT 1"
+  await pool.query(
+    "UPDATE users SET is_verified = 1 WHERE role IN ('admin', 'main_admin')"
   );
-  if (admins.length === 0) {
-    const username = process.env.SEED_ADMIN_USERNAME || 'calvin';
-    const password = process.env.SEED_ADMIN_PASSWORD || '123456';
-    const email = process.env.SEED_ADMIN_EMAIL || 'calvin@foodalbum.local';
-    const hash = await bcrypt.hash(password, BCRYPT_ROUNDS);
-    await pool.query(
-      `INSERT INTO users (username, email, password_hash, role, is_verified)
-       VALUES (?, ?, ?, 'admin', 1)
-       ON DUPLICATE KEY UPDATE role = 'admin', is_verified = 1`,
-      [username, email, hash]
-    );
-    console.log(
-      `[db] Admin pertama dibuat: "${username}". Segera ganti password default!`
-    );
-  }
+
+  // 4. Seed akun Super Admin utama (calvin / 123456 di-hash dengan bcrypt)
+  await seedMainAdmin({ resetPassword: false });
 
   // 5. Auto-seed Tempat Makan (restaurants), Ulasan (reviews), & Antrean Rekomendasi (submissions)
   const [existingRestRows] = await pool.query('SELECT id FROM restaurants');

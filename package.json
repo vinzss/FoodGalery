@@ -8,6 +8,7 @@
     "dev:web": "vite",
     "dev:api": "node --env-file-if-exists=server/.env --watch server/index.js",
     "start:api": "node --env-file-if-exists=server/.env server/index.js",
+    "seed:admin": "node --env-file-if-exists=server/.env server/seedMainAdmin.js",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

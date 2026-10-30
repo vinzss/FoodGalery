@@ -11,12 +11,11 @@ export type PageRoute =
   | 'restaurant-detail'
   | 'editorial'
   | 'submit-recommendation'
-  | 'admin'
   | 'login'
   | 'signup'
   | 'forgot-password';
 
-export type UserRole = 'user' | 'admin';
+export type UserRole = 'user' | 'admin' | 'main_admin';
 
 export interface AuthUser {
   id: number;
@@ -26,6 +25,21 @@ export interface AuthUser {
   isBanned: boolean;
   isVerified?: boolean;
   createdAt: string;
+}
+
+export interface AdminApprovalRequest {
+  id: number;
+  targetUserId: number;
+  targetUsername: string;
+  targetEmail: string;
+  targetRole: UserRole;
+  requestedById: number;
+  requestedByUsername: string;
+  reason: string | null;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
+  reviewedAt: string | null;
+  reviewedByUsername: string | null;
 }
 
 export interface PasswordResetRequest {

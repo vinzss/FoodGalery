@@ -75,10 +75,25 @@ export async function requireAuth(req, res, next) {
   next();
 }
 
+export function isAdminRole(role) {
+  return role === 'admin' || role === 'main_admin';
+}
+
+export function isMainAdminRole(role) {
+  return role === 'main_admin';
+}
+
 /** RBAC: batasi route ke role tertentu. Pakai setelah requireAuth. */
 export function requireRole(...roles) {
   return (req, res, next) => {
-    if (!req.user || !roles.includes(req.user.role)) {
+    const userRole = req.user?.role;
+    if (!userRole) {
+      return res.status(403).json({ error: 'FORBIDDEN' });
+    }
+    const allowed =
+      roles.includes(userRole) ||
+      (roles.includes('admin') && userRole === 'main_admin');
+    if (!allowed) {
       return res.status(403).json({ error: 'FORBIDDEN' });
     }
     next();

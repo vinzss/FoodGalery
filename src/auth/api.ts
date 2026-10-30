@@ -1,5 +1,6 @@
 // Client HTTP tipis untuk backend Express (/api diproxy oleh Vite ke :4000).
 import {
+  AdminApprovalRequest,
   AuthUser,
   CommunitySubmission,
   PasswordResetRequest,
@@ -111,11 +112,31 @@ export const authApi = {
 
 export const adminApi = {
   listUsers: () => request<{ users: AuthUser[] }>('/admin/users'),
-  setRole: (id: number, role: UserRole) =>
-    request<{ ok: true }>(`/admin/users/${id}/role`, {
+  setRole: (id: number, role: UserRole, reason?: string) =>
+    request<{ ok: true; pendingApproval?: boolean }>(`/admin/users/${id}/role`, {
       method: 'PATCH',
-      body: { role },
+      body: { role, reason },
     }),
+  createAdminCandidate: (payload: {
+    username: string;
+    email: string;
+    password: string;
+    reason?: string;
+  }) =>
+    request<{ ok: true; pendingApproval: boolean }>('/admin/create-admin', {
+      method: 'POST',
+      body: payload,
+    }),
+  listAdminRequests: () =>
+    request<{ requests: AdminApprovalRequest[] }>('/admin/admin-requests'),
+  decideAdminRequest: (id: number, decision: 'approved' | 'rejected') =>
+    request<{ ok: true; status: 'approved' | 'rejected' }>(
+      `/admin/admin-requests/${id}/decision`,
+      {
+        method: 'POST',
+        body: { decision },
+      }
+    ),
   setBanned: (id: number, banned: boolean) =>
     request<{ ok: true }>(`/admin/users/${id}/ban`, {
       method: 'PATCH',

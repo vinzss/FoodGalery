@@ -8,6 +8,7 @@ interface AuthContextType {
   isLoading: boolean;
   isAuthenticated: boolean;
   isAdmin: boolean;
+  isMainAdmin: boolean;
   login: (identifier: string, password: string) => Promise<AuthUser>;
   signup: (
     payload: Parameters<typeof authApi.signup>[0]
@@ -76,7 +77,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         user,
         isLoading,
         isAuthenticated: !!user,
-        isAdmin: user?.role === 'admin',
+        isAdmin: user?.role === 'admin' || user?.role === 'main_admin',
+        isMainAdmin: user?.role === 'main_admin',
         login,
         signup,
         verifyOtp,

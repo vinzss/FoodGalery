@@ -29,7 +29,6 @@ import { RestaurantDetailPage } from './pages/RestaurantDetailPage';
 import { EditorialArticlePage } from './pages/EditorialArticlePage';
 import { SubmitRecommendationPage } from './pages/SubmitRecommendationPage';
 import { AdminDashboard } from './admin/AdminDashboard';
-import { AdminLogin } from './admin/AdminLogin';
 import { UmkmFormPayload } from './admin/UmkmManager';
 import { AuthProvider, useAuth } from './auth/AuthContext';
 import { useAuthText } from './auth/authText';
@@ -37,7 +36,7 @@ import { contentApi } from './auth/api';
 import { LoginPage } from './pages/auth/LoginPage';
 import { SignUpPage } from './pages/auth/SignUpPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
-import { ShieldAlert, ArrowLeft, LogOut } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 const STORAGE_KEYS = {
   RESTAURANTS: 'fa_jakarta_restaurants_v2',
@@ -48,8 +47,10 @@ const STORAGE_KEYS = {
 function getInitialRouteFromLocation(): PageRoute {
   const path = window.location.pathname.toLowerCase();
   const hash = window.location.hash.toLowerCase();
+  // Rute statis /admin dihapus sepenuhnya: kembalikan URL ke '/'
   if (path.startsWith('/admin') || hash.includes('admin')) {
-    return 'admin';
+    window.history.replaceState({}, '', '/');
+    return 'home';
   }
   if (path.startsWith('/login') || hash.includes('login')) {
     return 'login';
@@ -89,6 +90,9 @@ export function AppContent() {
   // Backend Session & RBAC State
   const { user: authUser, isAdmin, logout, refresh } = useAuth();
   const a = useAuthText();
+
+  // Dynamic Admin Mode: otomatis aktif saat user dengan role admin / main_admin login (tanpa URL /admin)
+  const [adminViewMode, setAdminViewMode] = useState<'admin' | 'public'>('admin');
 
   // Platform State (Dimuat & disimpan langsung ke MySQL XAMPP / foodalbum_db)
   const [restaurants, setRestaurants] =
@@ -163,12 +167,11 @@ export function AppContent() {
     useState<VerificationFilter>('All');
   const [sortBy, setSortBy] = useState<SortOption>('featured');
 
-  // Sync URL with routes
+  // Sync URL with routes (tanpa rute /admin)
   const handleNavigate = (page: PageRoute) => {
     if (page !== 'login') setLoginNotice(undefined);
     setCurrentPage(page);
     const pathMap: Partial<Record<PageRoute, string>> = {
-      admin: '/admin',
       login: '/login',
       signup: '/signup',
       'forgot-password': '/forgot-password',
@@ -201,9 +204,8 @@ export function AppContent() {
 
   const handleLogout = async () => {
     await logout();
-    if (currentPage === 'admin') {
-      handleNavigate('home');
-    }
+    setAdminViewMode('admin');
+    handleNavigate('home');
   };
 
   const handleToggleSave = async (
@@ -366,6 +368,34 @@ export function AppContent() {
     EDITORIAL_ARTICLES.find((a) => a.id === selectedArticleId) ||
     EDITORIAL_ARTICLES[0];
 
+  // Conditional Rendering Dinamis: Jika user adalah admin / main_admin dan sedang di mode admin,
+  // langsung render Admin Command Center penuh tanpa URL /admin dan tanpa layout user biasa.
+  if (authUser && isAdmin && adminViewMode === 'admin') {
+    return (
+      <AdminDashboard
+        restaurants={restaurants}
+        reviews={reviews}
+        submissions={submissions}
+        onApproveSubmission={handleApproveSubmission}
+        onRejectSubmission={handleRejectSubmission}
+        onSaveRestaurant={handleSaveRestaurant}
+        onDeleteRestaurant={handleDeleteRestaurant}
+        onDeleteReview={handleDeleteReview}
+        onLogout={handleLogout}
+        adminUsername={authUser.username}
+        adminRole={authUser.role}
+        onAuthLost={() => {
+          refresh();
+        }}
+        onSwitchToUserView={() => {
+          setAdminViewMode('public');
+          handleNavigate('home');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-cream-50 text-charcoal-900 selection:bg-terracotta selection:text-white">
       <GlassHeader
@@ -377,7 +407,30 @@ export function AppContent() {
         onRemoveSaved={handleRemoveSaved}
         authUser={authUser}
         onLogout={handleLogout}
+        onEnterAdminMode={() => {
+          setAdminViewMode('admin');
+          handleNavigate('home');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
       />
+
+      {/* Tombol Mengambang Cepat untuk kembali ke Admin Command Center saat Admin sedang mempratinjau situs publik */}
+      {authUser && isAdmin && adminViewMode === 'public' && (
+        <div className="fixed bottom-20 xl:bottom-6 right-4 z-50">
+          <button
+            type="button"
+            onClick={() => {
+              setAdminViewMode('admin');
+              handleNavigate('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 rounded-2xl bg-charcoal-900 hover:bg-terracotta text-white px-4 py-3 text-xs font-bold shadow-warm-lg border border-white/15 transition"
+          >
+            <Shield className="h-4 w-4 text-amber-400" />
+            <span>Kembali ke Admin Mode</span>
+          </button>
+        </div>
+      )}
 
       <main className="flex-1">
         {currentPage === 'home' && (
@@ -489,14 +542,21 @@ export function AppContent() {
           <LoginPage
             notice={loginNotice}
             onSuccess={(loggedInUser) => {
+              if (
+                loggedInUser.role === 'admin' ||
+                loggedInUser.role === 'main_admin'
+              ) {
+                setAdminViewMode('admin');
+                handleNavigate('home');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+              }
               const target =
-                returnPage === 'admin' && loggedInUser.role === 'admin'
-                  ? 'admin'
-                  : returnPage === 'login' ||
-                      returnPage === 'signup' ||
-                      returnPage === 'forgot-password'
-                    ? 'home'
-                    : returnPage;
+                returnPage === 'login' ||
+                returnPage === 'signup' ||
+                returnPage === 'forgot-password'
+                  ? 'home'
+                  : returnPage;
               handleNavigate(target);
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
@@ -512,8 +572,7 @@ export function AppContent() {
               const target =
                 returnPage === 'login' ||
                 returnPage === 'signup' ||
-                returnPage === 'forgot-password' ||
-                returnPage === 'admin'
+                returnPage === 'forgot-password'
                   ? 'home'
                   : returnPage;
               handleNavigate(target);
@@ -532,85 +591,6 @@ export function AppContent() {
             }}
             onNavigateLogin={() => handleNavigate('login')}
           />
-        )}
-
-        {currentPage === 'admin' && (
-          <>
-            {!authUser ? (
-              <AdminLogin
-                onLoginSuccess={() => {
-                  refresh();
-                }}
-                onNavigateForgot={() => {
-                  setReturnPage('admin');
-                  handleNavigate('forgot-password');
-                }}
-                onBackToPublicSite={() => {
-                  handleNavigate('home');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              />
-            ) : !isAdmin ? (
-              <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
-                <div className="w-full max-w-md warm-card rounded-3xl p-8 bg-white border border-cream-200 shadow-warm-lg text-center space-y-5">
-                  <div className="mx-auto h-14 w-14 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center text-red-600">
-                    <ShieldAlert className="h-7 w-7" />
-                  </div>
-                  <div className="space-y-2">
-                    <h1 className="font-serif text-2xl font-bold text-charcoal-900">
-                      {a.access.deniedTitle}
-                    </h1>
-                    <p className="text-xs sm:text-sm text-charcoal-600">
-                      {a.access.deniedDesc}
-                    </p>
-                    <p className="text-xs font-semibold text-charcoal-800 pt-1">
-                      {a.access.loggedInAs}: @{authUser.username} ({authUser.role})
-                    </p>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => handleNavigate('home')}
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-cream-100 hover:bg-cream-200 px-4 py-2.5 text-xs font-bold text-charcoal-800 transition"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                      {a.backToSite}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        await logout();
-                      }}
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-terracotta hover:bg-terracotta-dark px-4 py-2.5 text-xs font-bold text-white transition"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      {a.access.switchAccount}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <AdminDashboard
-                restaurants={restaurants}
-                reviews={reviews}
-                submissions={submissions}
-                onApproveSubmission={handleApproveSubmission}
-                onRejectSubmission={handleRejectSubmission}
-                onSaveRestaurant={handleSaveRestaurant}
-                onDeleteRestaurant={handleDeleteRestaurant}
-                onDeleteReview={handleDeleteReview}
-                onLogout={handleLogout}
-                adminUsername={authUser.username}
-                onAuthLost={() => {
-                  refresh();
-                }}
-                onBackToSite={() => {
-                  handleNavigate('home');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              />
-            )}
-          </>
         )}
       </main>
 

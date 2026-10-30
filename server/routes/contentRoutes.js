@@ -9,7 +9,12 @@ import {
   insertReview,
   insertSubmission,
 } from '../db.js';
-import { optionalAuth, requireAuth, requireRole } from '../auth.js';
+import {
+  isAdminRole,
+  optionalAuth,
+  requireAuth,
+  requireRole,
+} from '../auth.js';
 
 const router = Router();
 
@@ -62,7 +67,7 @@ router.get('/bootstrap', optionalAuth, async (req, res) => {
   const [restaurants, reviews, submissions, savedIds] = await Promise.all([
     listAllRestaurants(),
     listAllReviews(),
-    req.user?.role === 'admin' ? listAllSubmissions() : Promise.resolve([]),
+    isAdminRole(req.user?.role) ? listAllSubmissions() : Promise.resolve([]),
     req.user ? listUserFavorites(req.user.id) : Promise.resolve([]),
   ]);
 
@@ -103,7 +108,7 @@ router.post('/migrate-local', optionalAuth, async (req, res) => {
   const [allRestaurants, allReviews, allSubmissions] = await Promise.all([
     listAllRestaurants(),
     listAllReviews(),
-    req.user?.role === 'admin' ? listAllSubmissions() : Promise.resolve([]),
+    isAdminRole(req.user?.role) ? listAllSubmissions() : Promise.resolve([]),
   ]);
 
   res.json({

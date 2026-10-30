@@ -30,6 +30,8 @@ interface GlassHeaderProps {
   /** User yang sedang login (null = guest) */
   authUser?: AuthUser | null;
   onLogout?: () => void;
+  /** Beralih kembali ke Admin Command Center (conditional rendering tanpa URL /admin) */
+  onEnterAdminMode?: () => void;
 }
 
 export const GlassHeader: React.FC<GlassHeaderProps> = ({
@@ -41,6 +43,7 @@ export const GlassHeader: React.FC<GlassHeaderProps> = ({
   onRemoveSaved,
   authUser = null,
   onLogout,
+  onEnterAdminMode,
 }) => {
   const { lang, setLang, t } = useLanguage();
   const a = useAuthText();
@@ -230,23 +233,28 @@ export const GlassHeader: React.FC<GlassHeaderProps> = ({
                           <p className="text-[11px] text-charcoal-500 truncate">
                             {authUser.email}
                           </p>
-                          {authUser.role === 'admin' && (
+                          {(authUser.role === 'admin' ||
+                            authUser.role === 'main_admin') && (
                             <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-olive px-2 py-0.5 text-[10px] font-bold text-white">
-                              <Shield className="h-3 w-3" /> Admin
+                              <Shield className="h-3 w-3" />{' '}
+                              {authUser.role === 'main_admin'
+                                ? 'Main Admin'
+                                : 'Admin'}
                             </span>
                           )}
                         </div>
-                        {authUser.role === 'admin' && (
+                        {(authUser.role === 'admin' ||
+                          authUser.role === 'main_admin') && (
                           <button
                             type="button"
                             onClick={() => {
                               setAccountMenuOpen(false);
-                              handleNavClick('admin');
+                              onEnterAdminMode?.();
                             }}
                             className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-charcoal-800 hover:bg-cream-100"
                           >
                             <Shield className="h-4 w-4 text-olive" />
-                            {t.admin.title}
+                            Mode Admin ({t.admin.title})
                           </button>
                         )}
                         <button
